@@ -74,20 +74,25 @@ class ErrorController extends AppController{
         $response = [];
         $error = [];
         $debug = '';
-        foreach($_GET['filter'] as $f => $value){
-            if(!in_array($f, $allowedFilters)){
-                $response['success'] = false;
-                $response['code'] = '400';
-                $error = ['message' => 'Bad Request'];
-                $debug .= $f . ',';
+        if(count($_GET) == 0){
+            $response['success'] = false;
+            $response['code'] = '400';
+            $error = ['message' => 'Bad Request'];
+            $debug .= 'No research params';
+        }else{
+            foreach($_GET['filter'] as $f => $value){
+                if(!in_array($f, $allowedFilters)){
+                    $response['success'] = false;
+                    $response['code'] = '400';
+                    $error = ['message' => 'Bad Request'];
+                    $debug .= $f . ',';
+                }
             }
         }
-
         if(count($error) == 0){
             $fieldsRequest = explode(',', $_GET['fields']);
 
             foreach($fieldsRequest as $f){
-
                 if(!in_array($f, $allowedColumn)){
                     $response['success'] = false;
                     $response['code'] = '400';
@@ -98,8 +103,7 @@ class ErrorController extends AppController{
         }
         if(count($error) > 0){
             $response['error'] = ['message' => $error['message'],
-                                  'debug'   => trim($debug,',')];
-
+                                  'debug'   => trim($debug, ',')];
         }
 
         return $response;
