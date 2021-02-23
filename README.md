@@ -34,6 +34,10 @@ bin/cake server -p 8765
 
 Then visit `http://localhost:8765` to see the welcome page.
 
+To test the behavior:
+
+http://localhost:8765/api/flyers.json?page=1&limit=10&filter[is_published]=1&fields=id,title
+
 ## Update
 
 Since this skeleton is a starting point for your application and various files
