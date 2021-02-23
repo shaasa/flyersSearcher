@@ -20,10 +20,17 @@ class FlyersController extends AppController{
         $this->CsvDatasource->openCsv();
     }
 
+    /**
+     * Manage the search
+     */
     public function index(){
+
+        //First check on request data
         $this->errorHandler = new ErrorController();
         $response = $this->errorHandler->checkRequestData($this->CsvDatasource->getAllowedColumns());
 
+
+        //If no errors occurrent start the search and return the response in json
         if(count($response) == 0){
             $flyers = $this->CsvDatasource->csvSearchResoults($_GET['filter'], $_GET['fields'], $_GET['page'], $_GET['limit']);
             $response = $this->errorHandler->checkResoults($flyers);

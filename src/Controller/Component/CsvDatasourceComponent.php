@@ -12,6 +12,13 @@ class CsvDatasourceComponent extends Component{
     protected $csvHandle;
     protected $columns;
 
+    /**
+     * Function to manage eventualy multiple csv file.
+     *
+     * @param string $typeRequest
+     *
+     * @return string
+     */
     protected function csvPath($typeRequest = '') : string{
         switch($typeRequest){
             case 'type1':
@@ -24,6 +31,9 @@ class CsvDatasourceComponent extends Component{
     }
 
     /**
+     *
+     * Open CSV and save the list of columns
+     *
      * @param $typeRequest
      *
      * @return bool
@@ -45,6 +55,18 @@ class CsvDatasourceComponent extends Component{
         }
     }
 
+    /**
+     *
+     * Start the search. The file is scrolled until lines matching the search and is in the requested range: only those are saved in memory.
+     * The procedure stops once all the results of the required range have been loaded.
+     *
+     * @param     $filters
+     * @param     $strFields
+     * @param int $page
+     * @param int $limit
+     *
+     * @return array
+     */
     public function csvSearchResoults($filters, $strFields, $page = 1, $limit = 50) : array{
         $results = [];
         $stop = $limit*$page;

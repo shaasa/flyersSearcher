@@ -68,6 +68,14 @@ class ErrorController extends AppController{
     public function afterFilter(EventInterface $event){
     }
 
+    /**
+     *
+     * Check request data and return array to serialize for the answer
+     *
+     * @param $allowedColumn
+     *
+     * @return array
+     */
     public function checkRequestData($allowedColumn) : array{
         $allowedFilters = ['category', 'is_published'];
 
@@ -109,6 +117,13 @@ class ErrorController extends AppController{
         return $response;
     }
 
+    /**
+     * Check that the search for flyers has produced valid results
+     *
+     * @param $results
+     *
+     * @return array
+     */
     public function checkResoults($results) : array{
         if(count($results) == 0){
             $response = ['success' => false,
